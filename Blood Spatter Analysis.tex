@@ -1,0 +1,1068 @@
+\documentclass[11pt]{article}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Keep aspect ratio if custom image width or height is specified
+    \setkeys{Gin}{keepaspectratio}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+
+    \usepackage{iftex}
+    \ifPDFTeX
+        \usepackage[T1]{fontenc}
+        \IfFileExists{alphabeta.sty}{
+              \usepackage{alphabeta}
+          }{
+              \usepackage[mathletters]{ucs}
+              \usepackage[utf8x]{inputenc}
+          }
+    \else
+        \usepackage{fontspec}
+        \usepackage{unicode-math}
+    \fi
+
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics
+                         % to support a larger range
+    \makeatletter % fix for old versions of grffile with XeLaTeX
+    \@ifpackagelater{grffile}{2019/11/01}
+    {
+      % Do nothing on new versions
+    }
+    {
+      \def\Gread@@xetex#1{%
+        \IfFileExists{"\Gin@base".bb}%
+        {\Gread@eps{\Gin@base.bb}}%
+        {\Gread@@xetex@aux#1}%
+      }
+    }
+    \makeatother
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage{array}     % table support for pandoc >= 2.11.3
+    \usepackage{calc}      % table minipage width calculation for pandoc >= 2.11.1
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{soul}      % strikethrough (\st) support for pandoc >= 3.0.0
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % common color for the border for error outputs.
+    \definecolor{outerrorbackground}{HTML}{FFDFDF}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+
+
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{Blood Spatter Analysis}
+    
+    
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\@namedef{PY@tok@w}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\@namedef{PY@tok@c}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cp}{\def\PY@tc##1{\textcolor[rgb]{0.61,0.40,0.00}{##1}}}
+\@namedef{PY@tok@k}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kt}{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\@namedef{PY@tok@o}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ow}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@nb}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nf}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@ne}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.80,0.25,0.22}{##1}}}
+\@namedef{PY@tok@nv}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@no}{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\@namedef{PY@tok@nl}{\def\PY@tc##1{\textcolor[rgb]{0.46,0.46,0.00}{##1}}}
+\@namedef{PY@tok@ni}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@na}{\def\PY@tc##1{\textcolor[rgb]{0.41,0.47,0.13}{##1}}}
+\@namedef{PY@tok@nt}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nd}{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@s}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sd}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@si}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@se}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.36,0.12}{##1}}}
+\@namedef{PY@tok@sr}{\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@ss}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sx}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@m}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@gh}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gu}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gd}{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\@namedef{PY@tok@gi}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.52,0.00}{##1}}}
+\@namedef{PY@tok@gr}{\def\PY@tc##1{\textcolor[rgb]{0.89,0.00,0.00}{##1}}}
+\@namedef{PY@tok@ge}{\let\PY@it=\textit}
+\@namedef{PY@tok@gs}{\let\PY@bf=\textbf}
+\@namedef{PY@tok@ges}{\let\PY@bf=\textbf\let\PY@it=\textit}
+\@namedef{PY@tok@gp}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@go}{\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@gt}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\@namedef{PY@tok@err}{\def\PY@bc##1{{\setlength{\fboxsep}{\string -\fboxrule}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}}
+\@namedef{PY@tok@kc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kd}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kr}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@bp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@fm}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@vc}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vg}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vi}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vm}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sa}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sb}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sc}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@dl}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s2}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sh}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s1}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@mb}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mf}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mh}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mi}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@il}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mo}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ch}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cm}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cpf}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@c1}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cs}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb.
+    \makeatletter
+        \newbox\Wrappedcontinuationbox
+        \newbox\Wrappedvisiblespacebox
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}}
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}}
+        \newcommand*\Wrappedcontinuationindent {3ex }
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox}
+        % Take advantage of the already applied Pygments mark-up to insert
+        % potential linebreaks for TeX processing.
+        %        {, <, #, %, $, ' and ": go to next line.
+        %        _, }, ^, &, >, - and ~: stay at end of broken line.
+        % Use of \textquotesingle for straight quote.
+        \newcommand*\Wrappedbreaksatspecials {%
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}%
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}%
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}%
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}%
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}%
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}%
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}%
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}%
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}%
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}%
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}%
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}%
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}%
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}%
+        }
+        % Some characters . , ; ? ! / are not pygmentized.
+        % This macro makes them "active" and they will insert potential linebreaks
+        \newcommand*\Wrappedbreaksatpunct {%
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}%
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}%
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}%
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}%
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}%
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}%
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}%
+            \catcode`\.\active
+            \catcode`\,\active
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active
+            \lccode`\~`\~
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        {\ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+\begin{document}
+    
+    \maketitle
+    
+    
+
+    
+  
+\section{Content}\label{content}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Importance of Blood Spatter Analysis
+\item
+  The Math Behind Blood Spatter Analysis
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Trigonometry of Blood Droplets
+  \item
+    Determining the Point of Origin
+  \item
+    Blood Drop Velocity \& Force Estimation
+  \item
+    Blood Spatter Distribution \& Area of Convergence
+  \end{itemize}
+\item
+  Data simulation
+\item
+  Extracting insights from blood spatter data
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Reverse engineering (finding source of spatter)
+  \end{itemize}
+\item
+  Machine learning
+\item
+  Assumptions of Blood Spatter Analysis
+\item
+  Conclusion
+\end{enumerate}
+
+\section{Importance of Blood Spatter
+Analysis}\label{importance-of-blood-spatter-analysis}
+
+Bloodstain pattern analysis (BPA) is crucial in forensic investigations
+because it helps reconstruct the events of a crime. By analyzing
+bloodstain patterns, forensic experts can determine: 1. The type of
+force used (blunt force, sharp force, gunshot) 2. The position of the
+victim and perpetrator 3. The movement of individuals after bloodshed 4.
+The minimum number of blows or shots inflicted 5. Whether a crime scene
+has been altered
+
+BPA relies heavily on fluid dynamics, trigonometry, and physics, which
+we will now explore in detail.
+
+\section{The Math Behind Blood Spatter
+Analysis}\label{the-math-behind-blood-spatter-analysis}
+
+\subsection{A. Trigonometry of Blood
+Droplets}\label{a.-trigonometry-of-blood-droplets}
+
+When blood is projected, it follows the laws of physics. One of the key
+aspects analyzed is the angle of impact (θ), which determines the
+direction and origin of the bloodstain.
+
+The angle of impact is calculated using the formula:
+
+\[\theta = arcsin\left(\frac{width}{length}\right)\]
+
+Where: - \emph{\(\theta\)} = Angle of impact (in degrees) - \emph{w} =
+Width of the bloodstain - \emph{l} = Length of the bloodstain
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Key Insight}: The more elongated the stain, the smaller the
+  angle of impact. A circular stain (where w=l) means the blood hit the
+  surface at \textbf{90° (perpendicular impact)}.
+\end{itemize}
+
+\subsection{B. Determining the Point of
+Origin}\label{b.-determining-the-point-of-origin}
+
+To determine where the blood originated in 3D space, forensic experts
+use triangulation.
+
+\textbf{Height of Origin (Z-axis Calculation)} Once we have multiple
+impact angles, we can estimate the height (h) from which blood
+originated using the tangent function:
+
+\[h=d.\tan(\theta)\]
+
+Where: - \emph{h} = Height of origin - \emph{d} = Horizontal distance
+from bloodstain to the assumed point of origin - \emph{\(\theta\)} =
+Angle of impact
+
+By analyzing multiple stains from different angles, we can pinpoint the
+exact location of the blood source.
+
+\subsection{C. Blood Drop Velocity \& Force
+Estimation}\label{c.-blood-drop-velocity-force-estimation}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Terminal Velocity of Blood Drops}
+\end{enumerate}
+
+The velocity of a free-falling blood droplet follows standard physics
+equations:
+
+\[v=\sqrt{2gh}\]
+
+Where:
+
+\begin{itemize}
+\item
+  \emph{v} = Velocity of blood droplet
+\item
+  \emph{g} = Acceleration due to gravity (9.81 m/s²)
+\item
+  \emph{h} = Height from which the blood originated
+\item
+  \emph{Key Insight}: A droplet falling from a greater height will have
+  a higher velocity, affecting stain size and distribution.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  \textbf{Estimating the Force Behind Blood Spatter} Different forces
+  cause different types of spatter:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Low-velocity spatter (\textless5~ft/s)}: Large stains (4--6 mm
+  diameter), typically from blunt objects or passive bleeding.
+\item
+  \textbf{Medium-velocity spatter (5 to 25 ft/s)}: Smaller stains (1--4
+  mm), often from beatings or stabbings.
+\item
+  \textbf{High-velocity spatter (\textgreater100~ft/s)}: Tiny mist-like
+  droplets (\textless1~mm), usually from gunshots.
+\end{itemize}
+
+The kinetic energy of a moving weapon or projectile can be estimated
+using:
+
+\[KE=\frac{1}{2}mv^2\]
+
+Where: - \emph{KE} = Kinetic Energy - \emph{m} = Mass of the
+weapon/projectile - \emph{v} = Velocity of impact
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Key Insight}: Gunshots produce \textbf{high-velocity mist-like
+  spatter}, while blunt force trauma leads to \textbf{medium-velocity
+  spatter} with larger drops.
+\end{itemize}
+
+\subsection{D. Blood Spatter Distribution \& Area of
+Convergence}\label{d.-blood-spatter-distribution-area-of-convergence}
+
+If multiple bloodstains originate from the same source, forensic
+analysts determine their point of convergence, which is the 2D location
+from where they came.
+
+Using vector analysis, each bloodstain's trajectory is drawn backward to
+find the intersection:
+
+\[X=\frac{\sum(d_i .\tan(\theta_i))}{n}\]
+
+Where:
+
+\begin{itemize}
+\item
+  \emph{X} = X-coordinate of the point of convergence
+\item
+  \emph{\(d_i\)} = Distance of each bloodstain from a reference point
+\item
+  \emph{\(θ_i\)} = Angle of impact of each bloodstain
+\item
+  \emph{n} = Number of bloodstains analyzed
+\item
+  \emph{Key Insight}: The point of convergence gives a 2D location,
+  while the point of origin gives the 3D position.
+\end{itemize}
+
+    \section{Data Simulation}\label{data-simulation}
+
+Using Python, we shall simulate blood spatter data. We shall generate
+random blood droplets with \textbf{velocity}, \textbf{impact angle} and
+\textbf{direction}. We shall follow by simulating blood spatter patterns
+by calculating stain size, shape and distribution. Then we shall
+visualize the spatter using Matplotlib.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{2}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{numpy}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{np}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{plt}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{generate\PYZus{}blood\PYZus{}spatter}\PY{p}{(}\PY{n}{num\PYZus{}drops}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,} \PY{n}{origin}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n}{max\PYZus{}velocity}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{spread}\PY{o}{=}\PY{l+m+mi}{30}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Simulates blood spatter using random angles and velocities.\PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{x\PYZus{}points}\PY{p}{,} \PY{n}{y\PYZus{}points} \PY{o}{=} \PY{p}{[}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{p}{]}
+    
+    \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{num\PYZus{}drops}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} Random velocity}
+        \PY{n}{velocity} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{max\PYZus{}velocity}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Random impact angle (in degrees, then converted to radians)}
+        \PY{n}{angle} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{spread}\PY{p}{,} \PY{n}{spread}\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{pi} \PY{o}{/} \PY{l+m+mi}{180}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Compute x, y displacement (assuming flat surface impact)}
+        \PY{n}{x} \PY{o}{=} \PY{n}{origin}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{n}{velocity} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{angle}\PY{p}{)}
+        \PY{n}{y} \PY{o}{=} \PY{n}{origin}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{n}{velocity} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{angle}\PY{p}{)}
+        
+        \PY{n}{x\PYZus{}points}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+        \PY{n}{y\PYZus{}points}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{y}\PY{p}{)}
+    
+    \PY{k}{return} \PY{n}{x\PYZus{}points}\PY{p}{,} \PY{n}{y\PYZus{}points}
+
+\PY{c+c1}{\PYZsh{} Generate and plot blood spatter}
+\PY{n}{x}\PY{p}{,} \PY{n}{y} \PY{o}{=} \PY{n}{generate\PYZus{}blood\PYZus{}spatter}\PY{p}{(}\PY{n}{num\PYZus{}drops}\PY{o}{=}\PY{l+m+mi}{200}\PY{p}{,} \PY{n}{max\PYZus{}velocity}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{,} \PY{n}{spread}\PY{o}{=}\PY{l+m+mi}{45}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{9}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.6}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{X Position}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Y Position}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Simulated Blood Spatter}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_2_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{What type of data did we just
+simulate?}\label{what-type-of-data-did-we-just-simulate}
+
+The simulation involved: - A single origin point → Suggests a localized
+source, which could be a wound. - Randomized velocities (1--15 m/s) →
+Simulates different impact forces. - Random spread angles
+(\(\pm45^{\circ}\)) → Creates a medium-width distribution.
+
+Looking at these parameters, the generated pattern resembles: * Impact
+Spatter rather than passive dripping. * Medium-velocity spatter (based
+on velocity range). * A possible blunt force or stabbing rather than a
+high-energy gunshot.
+
+If we wanted to simulate data for, say a gunshot wound, we can modify
+the code by increasing velocity range (30-100 m/s), reduce droplet size
+and narrow the spread angle (\(\pm15^{\circ}\))
+
+\subsection{Extracting Insights from Blood
+Spatter}\label{extracting-insights-from-blood-spatter}
+
+We need to analyze and understand the simulated spatter data.
+
+The key analyses in this step involve: 1. \textbf{Droplet Size
+Distribution} -- How large are the stains? (Histogram, mean, variance)
+2. \textbf{Velocity vs.~Distance Relationship} -- Do faster droplets
+travel farther? (Scatter plot, correlation) 3. \textbf{Impact Angle
+Estimation} -- Use trigonometry to estimate the angle of impact 4.
+\textbf{Find the Source of Blood (Reverse Engineering)} -- Use
+trigonometry \& geometry
+
+Using python, we generate a code to analyze the first three then proceed
+to reverse engineering.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{3}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{numpy}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{np}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{plt}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{seaborn}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{sns}
+
+\PY{c+c1}{\PYZsh{} Generate synthetic blood spatter data}
+\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{42}\PY{p}{)}
+\PY{n}{num\PYZus{}drops} \PY{o}{=} \PY{l+m+mi}{200}
+
+\PY{n}{drop\PYZus{}sizes} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{scale}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{n}{num\PYZus{}drops}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Mean 3mm, Std 1mm}
+\PY{n}{velocities} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{,} \PY{n}{num\PYZus{}drops}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Velocity range from 2\PYZhy{}20 m/s}
+\PY{n}{distances} \PY{o}{=} \PY{n}{velocities} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{1.5}\PY{p}{,} \PY{n}{num\PYZus{}drops}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Distance depends on velocity}
+\PY{n}{angles} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arcsin}\PY{p}{(}\PY{n}{drop\PYZus{}sizes} \PY{o}{/} \PY{p}{(}\PY{n}{drop\PYZus{}sizes} \PY{o}{+} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{n}{num\PYZus{}drops}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{l+m+mi}{180} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Impact angles}
+
+\PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{}\PYZhy{} Plot 1: Droplet Size Distribution \PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{n}{sns}\PY{o}{.}\PY{n}{histplot}\PY{p}{(}\PY{n}{drop\PYZus{}sizes}\PY{p}{,} \PY{n}{bins}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{,} \PY{n}{kde}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Droplet Size (mm)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Frequency}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Droplet Size Distribution}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_4_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{4}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{}\PYZhy{} Plot 2: Velocity vs. Distance Relationship \PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{velocities}\PY{p}{,} \PY{n}{distances}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.7}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Velocity (m/s)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance (cm)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Velocity vs. Distance Relationship}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_5_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{}\PYZhy{} Plot 3: Impact Angle Estimation \PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{n}{sns}\PY{o}{.}\PY{n}{histplot}\PY{p}{(}\PY{n}{angles}\PY{p}{,} \PY{n}{bins}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{,} \PY{n}{kde}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{green}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Impact Angle (Degrees)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Frequency}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Impact Angle Distribution}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{6}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Correlation Analysis}
+\PY{n}{corr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{corrcoef}\PY{p}{(}\PY{n}{velocities}\PY{p}{,} \PY{n}{distances}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Correlation between Velocity and Distance: }\PY{l+s+si}{\PYZob{}}\PY{n}{corr}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Correlation between Velocity and Distance: 0.83
+    \end{Verbatim}
+
+    Now that we have explored the Droplet size, Velocity vs Distance and the
+Impact angle, lets try and estimate the source of the spatter by reverse
+engineering based on the impact angle and distances
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{9}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{}\PYZhy{} Reverse Engineering Blood Source \PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{n}{heights} \PY{o}{=} \PY{n}{distances} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{tan}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{radians}\PY{p}{(}\PY{n}{angles}\PY{p}{)}\PY{p}{)}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{find\PYZus{}origin}\PY{p}{(}\PY{n}{distances}\PY{p}{,} \PY{n}{angles}\PY{p}{)}\PY{p}{:}
+    \PY{n}{heights} \PY{o}{=} \PY{n}{distances} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{tan}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{radians}\PY{p}{(}\PY{n}{angles}\PY{p}{)}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Estimate height of impact}
+    \PY{n}{avg\PYZus{}origin\PYZus{}x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{distances}\PY{p}{)}
+    \PY{n}{avg\PYZus{}origin\PYZus{}y} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{heights}\PY{p}{)}
+    \PY{k}{return} \PY{n}{avg\PYZus{}origin\PYZus{}x}\PY{p}{,} \PY{n}{avg\PYZus{}origin\PYZus{}y}
+
+\PY{n}{origin\PYZus{}x}\PY{p}{,} \PY{n}{origin\PYZus{}y} \PY{o}{=} \PY{n}{find\PYZus{}origin}\PY{p}{(}\PY{n}{distances}\PY{p}{,} \PY{n}{angles}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Estimated Blood Source Location: X = }\PY{l+s+si}{\PYZob{}}\PY{n}{origin\PYZus{}x}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ cm, Y = }\PY{l+s+si}{\PYZob{}}\PY{n}{origin\PYZus{}y}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ cm}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Visualizing estimated blood source}
+\PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{distances}\PY{p}{,} \PY{n}{heights}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.6}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Blood Drops}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{origin\PYZus{}x}\PY{p}{,} \PY{n}{origin\PYZus{}y}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Estimated Source}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance (cm)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Height (cm)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Estimated Blood Source Location}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Estimated Blood Source Location: X = 10.87 cm, Y = 6.62 cm
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_9_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \textbf{What have we done?}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The height of impact is estimated using trigonometry;
+\end{enumerate}
+
+\[Height = Distance * \tan(Impact Angle)\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Calculated the average position of the estimated origin (X,Y)
+\item
+  Plotted the blood spatter and marked the estimated origin in red (X)
+\end{enumerate}
+
+    \section{Machine Learning Approach to Blood Spatter
+Analysis}\label{machine-learning-approach-to-blood-spatter-analysis}
+
+\textbf{Objective} In this section, we apply K-Means clustering, an
+unsupervised machine learning technique, to analyze blood spatter
+patterns. The goal is to identify natural groupings within the data
+based on key characteristics such as distance from the source and impact
+angle. This can help forensic investigators classify different
+bloodstain patterns, potentially distinguishing between different types
+of impact forces or sources.
+
+\textbf{Why K-Means Clustering?} We chose K-Means clustering for the
+following reasons:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Unsupervised Learning}: Since we don't have predefined labels
+  for the bloodstain data, clustering helps us discover hidden
+  structures.
+\item
+  \emph{Efficiency}: K-Means is computationally efficient, making it
+  suitable for large forensic datasets.
+\item
+  \emph{Interpretability}: By visualizing clusters, we can infer
+  different impact dynamics and blood spatter sources.
+\end{itemize}
+
+\textbf{Methodology} \\
+1. Feature Selection: We used two key features for
+clustering: \\
+- \emph{Distance from the source (cm)}: Helps differentiate
+between high-velocity vs.~low-velocity spatters. \\
+- \emph{Impact Angle
+(degrees)}: Indicates the trajectory and nature of impact.\\
+2. K-Means Algorithm: \\
+- We set the number of clusters to three (k=3) based on expected variations in spatter patterns. The algorithm assigns each
+bloodstain to the nearest cluster center. We visualize the results
+using a scatter plot, where different colors represent distinct
+clusters. 
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{11}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{cluster}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{KMeans}
+
+\PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{}\PYZhy{} Clustering Blood Spatter Data \PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{n}{data\PYZus{}points} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{column\PYZus{}stack}\PY{p}{(}\PY{p}{(}\PY{n}{distances}\PY{p}{,} \PY{n}{angles}\PY{p}{)}\PY{p}{)}
+\PY{n}{kmeans} \PY{o}{=} \PY{n}{KMeans}\PY{p}{(}\PY{n}{n\PYZus{}clusters}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{42}\PY{p}{)}
+\PY{n}{kmeans}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{data\PYZus{}points}\PY{p}{)}
+\PY{n}{labels} \PY{o}{=} \PY{n}{kmeans}\PY{o}{.}\PY{n}{labels\PYZus{}}
+
+\PY{c+c1}{\PYZsh{} Visualizing Clusters}
+\PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{distances}\PY{p}{,} \PY{n}{angles}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{n}{labels}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{viridis}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.7}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance (cm)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Impact Angle (Degrees)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Clustering of Blood Spatter Data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{colorbar}\PY{p}{(}\PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Cluster Label}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_12_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \textbf{Results \& Interpretation}
+
+\begin{itemize}
+\tightlist
+\item
+  The clustering process groups the blood spatters based on similar
+  impact angles and distances.
+\item
+  Distinct clusters suggest variations in blood spatter, which could
+  correspond to:
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Low-velocity impact (e.g., blunt force trauma)
+\item
+  Medium-velocity impact (e.g., stabbing or beating)
+\item
+  High-velocity impact (e.g., gunshot wounds) If needed, we can
+  fine-tune the clustering by adjusting k (number of clusters) or
+  incorporating additional features like droplet size or velocity.
+\end{enumerate}
+
+    \section{Assumptions in Blood Spatter
+Analysis}\label{assumptions-in-blood-spatter-analysis}
+
+Blood spatter analysis relies on several fundamental assumptions to
+interpret the patterns left at a crime scene. These assumptions form the
+basis for reconstructing events based on bloodstain evidence.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Blood Follows Predictable Physical Laws: Blood droplets behave as
+  projectiles, governed by Newtonian physics. Once a blood droplet
+  leaves the source, it is primarily influenced by gravity, velocity,
+  air resistance, and surface tension. The trajectory and final resting
+  position of the droplet can be predicted using standard physics
+  equations.
+\item
+  Droplet Shape and Size Correlate with Force and Impact: The size of
+  blood droplets depends on the velocity of impact:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Low-velocity impact (e.g., blunt force trauma) produces larger, more
+  concentrated stains.
+\item
+  Medium-velocity impact (e.g., beating, stabbing) results in smaller
+  and more dispersed droplets.
+\item
+  High-velocity impact (e.g., gunshot wounds) creates fine mist-like
+  spatter.
+\end{itemize}
+
+Larger stains typically indicate lower-energy events, while smaller
+stains suggest higher-energy impacts.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\item
+  Impact Angle Can Be Estimated Using Geometry: Blood droplets striking
+  a surface at an angle form an elliptical shape. The angle of impact
+  (\(\theta\)) can be calculated using the width-to-length ratio of the
+  stain: \[\theta=arcsin\left(\frac{width}{length}\right)\] A more
+  elongated stain suggests a shallower impact angle, while a nearly
+  circular stain indicates a perpendicular impact.
+\item
+  Bloodstain Clustering Represents Different Sources or Events:
+  Bloodstains at a crime scene are often grouped into clusters based on
+  their properties. These clusters may correspond to different:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Impact events} (e.g., multiple strikes or shots).
+\item
+  \emph{Sources} (e.g., victim vs.~suspect blood).
+\item
+  \emph{Forces applied} (e.g., gunshot vs.~blunt force trauma).
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\item
+  Blood Source Estimation Assumes a Common Origin: Analysts often use
+  trigonometry to estimate the point of origin of a blood spatter event.
+  This assumes that all stains in a given pattern originate from one
+  specific source. However, movement or multiple impacts may complicate
+  the actual distribution of stains.
+\item
+  Surface Type Affects Spatter Behavior: The surface that blood lands on
+  plays a critical role in determining stain shape and distribution.
+  Smooth, non-porous surfaces (e.g., glass, tile) produce well-defined
+  stains with minimal distortion. Rough or absorbent surfaces (e.g.,
+  fabric, carpet) cause irregular stains due to absorption and surface
+  tension effects.
+\item
+  Blood Patterns Can Be Reverse Engineered: By analyzing bloodstains,
+  forensic experts assume they can trace back to the event that caused
+  the pattern. This involves using mathematical models to estimate
+  factors like height of impact, velocity, and point of origin. While
+  reliable, external factors such as secondary impacts, smudging, or
+  additional forces can introduce uncertainty.
+\end{enumerate}
+
+In conclusion, blood spatter analysis is a powerful forensic tool, but
+it relies on fundamental assumptions about physics, biology, and
+geometry. Understanding these assumptions allows forensic investigators
+to interpret crime scenes accurately while also recognizing potential
+limitations and uncertainties in their findings.
+
+    \section{Conclusion}\label{conclusion}
+
+In this report, we explored the principles of blood spatter analysis,
+from understanding its forensic significance to simulating and analyzing
+synthetic bloodstain data. Using machine learning techniques,
+particularly K-Means clustering, we identified distinct patterns within
+the data, demonstrating how computational methods can aid forensic
+investigations.
+
+Our study reaffirmed several key principles in blood spatter analysis:
+
+\begin{itemize}
+\tightlist
+\item
+  Blood droplet size and velocity correlate with the force applied at
+  the source.
+\item
+  Impact angle estimation allows for the reconstruction of possible
+  crime scene events.
+\item
+  Clustering techniques help distinguish between different spatter
+  patterns, potentially separating multiple impact events or different
+  sources of blood.
+\end{itemize}
+
+\subsection{Implications and
+Limitations}\label{implications-and-limitations}
+
+The application of data science and machine learning in forensic
+analysis holds great promise for improving the accuracy of crime scene
+reconstructions. However, there are limitations:
+
+\begin{itemize}
+\tightlist
+\item
+  Environmental factors (e.g., air resistance, surface properties) may
+  introduce variability that is difficult to model.
+\item
+  Human movement and secondary transfer can complicate interpretations.
+\item
+  Machine learning models require large, real-world datasets to enhance
+  accuracy beyond simulations.
+\end{itemize}
+
+\subsection{Future Work}\label{future-work}
+
+To improve upon this analysis, future studies could:
+
+\begin{itemize}
+\tightlist
+\item
+  Use supervised learning techniques to classify bloodstain patterns
+  with labeled forensic data.
+\item
+  Incorporate 3D reconstruction methods for more precise origin
+  estimations.
+\item
+  Validate results with real forensic cases to assess model reliability
+  in actual crime scene investigations.
+\end{itemize}
+
+By bridging forensic science with machine learning, this study
+highlights the potential of computational tools in crime scene analysis.
+While challenges remain, continued advancements in data-driven forensics
+will undoubtedly enhance the precision and reliability of blood spatter
+interpretation.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}
